@@ -131,10 +131,11 @@ const NewsDetailsPage = async ({ params }: NewsDetailsPageProps) => {
 
       {/* Content */}
       <section>
-        <div className="grid grid-cols-1 gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_280px] lg:px-8 lg:py-20">
+        <div className="grid grid-cols-1 gap-10 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_280px] lg:px-8 lg:py-20">
           {/* Article Body */}
-          <article className="min-w-0">
+          <article className="">
             <div className="rounded-3xl bg-white border border-neutral-300 px-5 py-8 shadow-sm sm:px-8 sm:py-10 lg:px-12">
+              <h4 className="text-lg font-semibold py-3 border-b-2 border-red-700">বিস্তারিত</h4>
               {news?.body?.map((item: Tbody, index: number) => {
                 /* IMAGE */
                 if (item.type === "image") {

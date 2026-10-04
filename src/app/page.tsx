@@ -1,4 +1,7 @@
 import NewsCard from "@/components/Cards/NewsCard";
+import ArticleCardSkeleton from "@/components/skeleton/ArticleCardSkeleton";
+import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
+import MostReadSkeleton from "@/components/skeleton/MostReadSkeleton ";
 import { getHomePageData, getMostReadNews } from "@/lib/AllFatchData";
 import {
   IHomePageDataType,
@@ -7,6 +10,7 @@ import {
 } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function Home() {
   const homePageData: IHomePageSectionDataType[] = await getHomePageData();
@@ -21,48 +25,50 @@ export default async function Home() {
         <div className="lg:col-span-2">
           <div className="grid lg:grid-cols-2 gap-4">
             {/* Main news section*/}
-            <Link href={`/article/${mainNews.id}`}>
-              <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
-                <Image
-                  src={mainNews.imageUrl}
-                  alt={mainNews.imageAlt}
-                  width={800}
-                  height={400}
-                  className="w-full h-auto"
-                />
-                <div className="px-5 py-4 grid gap-3">
-                  <h2 className="text-xs font-bold text-red-700">
-                    {mainNews.category}
-                  </h2>
-                  <h1 className="text-2xl font-bold">{mainNews.title}</h1>
-                  <p className="text-neutral-600">{mainNews.description}</p>
-                  <p className="text-xs text-neutral-500">
-                    {new Date(mainNews.lastPublished).toLocaleDateString(
-                      "bn-BD",
-                      {
-                        dateStyle: "full",
-                      },
-                    )}
-                  </p>
+            <Suspense fallback={<ArticleCardSkeleton />}>
+              <Link href={`/article/${mainNews.id}`}>
+                <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
+                  <Image
+                    src={mainNews.imageUrl}
+                    alt={mainNews.imageAlt}
+                    width={800}
+                    height={400}
+                    className="w-full h-auto"
+                  />
+                  <div className="px-5 py-4 grid gap-3">
+                    <h2 className="text-xs font-bold text-red-700">
+                      {mainNews.category}
+                    </h2>
+                    <h1 className="text-2xl font-bold">{mainNews.title}</h1>
+                    <p className="text-neutral-600">{mainNews.description}</p>
+                    <p className="text-xs text-neutral-500">
+                      {new Date(mainNews.lastPublished).toLocaleDateString(
+                        "bn-BD",
+                        {
+                          dateStyle: "full",
+                        },
+                      )}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </Suspense>
             <div>
               {/*Main news right side section*/}
-              <div className="bg-white h-full rounded-lg overflow-hidden border border-neutral-200">
-                {filterdData[0].articles.slice(1, 5).map((article) => (
-                  <Link key={article.id} href={`/article/${article.id}`}>
-                    <div
-                      className=" px-5 py-4 border-b border-neutral-200"
-                    >
-                      <h2 className="text-xs font-bold text-red-700">
-                        {article.category}
-                      </h2>
-                      <h1 className="text-lg font-bold">{article.title}</h1>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <Suspense fallback={<ArticleListSkeleton />}>
+                <div className="bg-white h-full rounded-lg overflow-hidden border border-neutral-200">
+                  {filterdData[0].articles.slice(1, 5).map((article) => (
+                    <Link key={article.id} href={`/article/${article.id}`}>
+                      <div className=" px-5 py-4 border-b border-neutral-200">
+                        <h2 className="text-xs font-bold text-red-700">
+                          {article.category}
+                        </h2>
+                        <h1 className="text-lg font-bold">{article.title}</h1>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </Suspense>
             </div>
           </div>
           {/*Others news section*/}
@@ -82,15 +88,19 @@ export default async function Home() {
           </div>
         </div>
         {/*Most read section*/}
-        <div className="col-span-1 bg-white border border-neutral-200 rounded-lg sticky top-13 h-fit sm:h-130 overflow-y-auto">
-          <h2 className="px-5 pt-4 font-bold ">সর্বাধিক পঠিত</h2>
-          {mostReadNews.map((news, ind) => (
-            <div key={ind} className="px-5 py-4 flex gap-2">
-              <span className="text-xl text-red-700">{ind + 1}</span>
-              <span>{news.title}</span>
-            </div>
-          ))}
-        </div>
+        <Suspense fallback={<MostReadSkeleton />}>
+          <div className="col-span-1 bg-white border border-neutral-200 rounded-lg sticky top-13 h-fit sm:h-130 overflow-y-auto">
+            <h2 className="px-5 pt-4 font-bold ">সর্বাধিক পঠিত</h2>
+            {mostReadNews.map((news, ind) => (
+              <Link key={ind} href={`/article/${news.id}`}>
+                <div className="px-5 py-4 flex gap-2">
+                  <span className="text-xl text-red-700">{ind + 1}</span>
+                  <span>{news.title}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </Suspense>
       </div>
     </div>
   );
