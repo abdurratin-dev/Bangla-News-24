@@ -13,7 +13,7 @@ const CategoryPage = async({params}: CategoryPageProps) => {
     const  data =await getCategoryData.json();
     const categoryData: IHomePageDataType[] = data.data;
     return (
-        <div className='grid grid-cols-4 gap-4 mt-5'>
+        <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 mt-5'>
             {
                 categoryData.map(newsData => <NewsCard key={newsData.id} news={newsData} />)
             }
