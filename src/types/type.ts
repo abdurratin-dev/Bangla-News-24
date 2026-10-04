@@ -61,3 +61,64 @@ export interface IMostReadDataType {
   source: string
   rank: number
 }
+
+export interface INewsDetailsDataType {
+  id: string;
+  title: string;
+  description: {
+    blocks: {
+      type: "text";
+      model: {
+        blocks: {
+          type: "paragraph";
+          model: {
+            text: string;
+            blocks: {
+              type: "fragment";
+              model: {
+                text: string;
+                attributes: unknown[];
+              };
+            }[];
+          };
+        }[];
+      };
+    }[];
+  };
+  link: string;
+  firstPublished: string;
+  lastPublished: string;
+  byline: {
+    name: string;
+    role: string;
+  }[];
+  topics: {
+    id: string;
+    name: string;
+  }[];
+  tags: string[];
+  imageUrl: string;
+  body: (
+    | {
+        type: "image";
+        url: string;
+        width: number;
+        height: number;
+        caption: string;
+        altText: string;
+        copyrightHolder: string;
+      }
+    | {
+        type: "text";
+        text: string;
+      }
+    | {
+        type: "subheading";
+        text: string;
+      }
+  )[];
+  text: string;
+  wordCount: number;
+  source: string;
+  sourceUrl: string;
+}

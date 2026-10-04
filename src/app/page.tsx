@@ -1,67 +1,78 @@
 import NewsCard from "@/components/Cards/NewsCard";
 import { getHomePageData, getMostReadNews } from "@/lib/AllFatchData";
-import { IHomePageDataType, IHomePageSectionDataType, IMostReadDataType } from "@/types/type";
+import {
+  IHomePageDataType,
+  IHomePageSectionDataType,
+  IMostReadDataType,
+} from "@/types/type";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   const homePageData: IHomePageSectionDataType[] = await getHomePageData();
   const mainNews: IHomePageDataType = homePageData[0].articles[0];
-  const mostReadNews: IMostReadDataType[] = await getMostReadNews()
+  const mostReadNews: IMostReadDataType[] = await getMostReadNews();
+  const filterdData: IHomePageSectionDataType[] = homePageData.filter(
+    (item) => item.count !== 1,
+  );
   return (
     <div>
-      <div className="grid grid-cols-3 gap-7 mt-5">
-        <div className="col-span-2">
-          <div className="grid grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-7 mt-5">
+        <div className="lg:col-span-2">
+          <div className="grid lg:grid-cols-2 gap-4">
             {/* Main news section*/}
-            <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
-              <Image
-                src={mainNews.imageUrl}
-                alt={mainNews.imageAlt}
-                width={800}
-                height={400}
-                className="w-full h-auto"
-              />
-              <div className="px-5 py-4 grid gap-3">
-                <h2 className="text-xs font-bold text-red-700">
-                  {mainNews.category}
-                </h2>
-                <h1 className="text-2xl font-bold">{mainNews.title}</h1>
-                <p className="text-neutral-600">{mainNews.description}</p>
-                <p className="text-xs text-neutral-500">
-                  {new Date(mainNews.lastPublished).toLocaleDateString(
-                    "bn-BD",
-                    {
-                      dateStyle: "full",
-                    },
-                  )}
-                </p>
+            <Link href={`/article/${mainNews.id}`}>
+              <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
+                <Image
+                  src={mainNews.imageUrl}
+                  alt={mainNews.imageAlt}
+                  width={800}
+                  height={400}
+                  className="w-full h-auto"
+                />
+                <div className="px-5 py-4 grid gap-3">
+                  <h2 className="text-xs font-bold text-red-700">
+                    {mainNews.category}
+                  </h2>
+                  <h1 className="text-2xl font-bold">{mainNews.title}</h1>
+                  <p className="text-neutral-600">{mainNews.description}</p>
+                  <p className="text-xs text-neutral-500">
+                    {new Date(mainNews.lastPublished).toLocaleDateString(
+                      "bn-BD",
+                      {
+                        dateStyle: "full",
+                      },
+                    )}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
             <div>
               {/*Main news right side section*/}
               <div className="bg-white h-full rounded-lg overflow-hidden border border-neutral-200">
-                {homePageData[0].articles.slice(1, 5).map((article) => (
-                  <div
-                    key={article.id}
-                    className=" px-5 py-4 border-b border-neutral-200"
-                  >
-                    <h2 className="text-xs font-bold text-red-700">
-                      {article.category}
-                    </h2>
-                    <h1 className="text-lg font-bold">{article.title}</h1>
-                  </div>
+                {filterdData[0].articles.slice(1, 5).map((article) => (
+                  <Link key={article.id} href={`/article/${article.id}`}>
+                    <div
+                      className=" px-5 py-4 border-b border-neutral-200"
+                    >
+                      <h2 className="text-xs font-bold text-red-700">
+                        {article.category}
+                      </h2>
+                      <h1 className="text-lg font-bold">{article.title}</h1>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
           {/*Others news section*/}
-          <div>
-            {homePageData.slice(1, 10).map((news, ind) => (
+          <div className="mt-5">
+            {filterdData.slice(1, 8).map((news, ind) => (
               <div key={ind}>
                 <h2 className="text-lg font-semibold py-3 border-b-2 border-red-700">
                   {news.title}
                 </h2>
-                <div className="grid grid-cols-3 gap-5 py-4">
+                <div className="grid lg:grid-cols-3 gap-5 py-4">
                   {news.articles.map((newsData) => (
                     <NewsCard key={newsData.id} news={newsData}></NewsCard>
                   ))}
@@ -71,14 +82,14 @@ export default async function Home() {
           </div>
         </div>
         {/*Most read section*/}
-        <div className="col-span-1 bg-white border border-neutral-200 rounded-lg sticky top-13 h-130 overflow-y-auto">
+        <div className="col-span-1 bg-white border border-neutral-200 rounded-lg sticky top-13 h-fit sm:h-130 overflow-y-auto">
           <h2 className="px-5 pt-4 font-bold ">সর্বাধিক পঠিত</h2>
-          {
-            mostReadNews.map((news, ind)=> <div key={ind} className="px-5 py-4 flex gap-2">
-              <span className="text-xl text-red-700">{ind+1}</span>
+          {mostReadNews.map((news, ind) => (
+            <div key={ind} className="px-5 py-4 flex gap-2">
+              <span className="text-xl text-red-700">{ind + 1}</span>
               <span>{news.title}</span>
-            </div>)
-          }
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -18,11 +18,10 @@ const Marquee = async () => {
         <MarqueeText
           className="px-4"
           duration={15}
-          pauseOnHover={true}
           direction="right"
         >
           {inprtentHeadlines.map((headline) => (
-            <Link href={`/headlines/${headline.id}`} key={headline.id}>
+            <Link href={`/article/${headline.id}`} key={headline.id}>
               <span className="text-sm text-white hover:underline">
                 {headline.title}
               </span>

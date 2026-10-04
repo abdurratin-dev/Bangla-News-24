@@ -1,5 +1,6 @@
 import { IHomePageDataType } from "@/types/type";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface NewsCardProps {
@@ -8,6 +9,7 @@ interface NewsCardProps {
 
 const NewsCard = ({ news }: NewsCardProps) => {
   return (
+    <Link href={`/article/${news.id}`}>
     <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
       <Image
         src={news.imageUrl}
@@ -27,6 +29,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         </p>
       </div>
     </div>
+    </Link>
   );
 };
 
