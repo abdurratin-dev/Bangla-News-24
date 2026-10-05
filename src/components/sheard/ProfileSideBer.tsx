@@ -5,7 +5,7 @@ import React from "react";
 
 const ProfileSideBer = () => {
   return (
-    <aside className="h-fit rounded-2xl border border-black/10 bg-white p-3 sticky top-13">
+    <aside className="h-fit rounded-2xl border border-black/10 bg-white p-3 lg:sticky relative lg:top-13">
       <div className="px-3 pb-3 pt-2 text-xs font-black uppercase tracking-[0.18em] text-black/40">
         Account
       </div>

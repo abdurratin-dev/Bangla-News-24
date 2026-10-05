@@ -100,10 +100,10 @@ const Navlinks = ({ menu,setMenu }: NavLinksProps) => {
     );
   }
   return (
-    <div className="flex justify-center items-center w-full gap-5">
+    <div className="flex justify-center items-center w-full">
       <Link
         href="/"
-        className="hover:text-red-700 text-sm text-neutral-700 font-semibold"
+        className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 py-2 ${pathname === `/` && "bg-red-700 text-white rounded-sm hover:text-white hover:bg-red-800"}`}
       >
         মূলপাতা
       </Link>
@@ -111,7 +111,7 @@ const Navlinks = ({ menu,setMenu }: NavLinksProps) => {
         <Link
           key={link.slug}
           href={`/category/${link.slug}`}
-          className="hover:text-red-700 text-sm text-neutral-700 font-semibold"
+          className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 py-2 ${pathname === `/category/${link.slug}` && "bg-red-700 text-white rounded-sm hover:text-white hover:bg-red-800"}`}
         >
           {link.title}
         </Link>
