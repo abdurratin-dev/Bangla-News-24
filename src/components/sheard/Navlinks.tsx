@@ -1,11 +1,13 @@
 "use client";
 import { INavLinksDataType } from "@/types/type";
+import { usePathname } from 'next/navigation'
 import Link from "next/link";
 
 interface NavLinksProps {
   menu: boolean;
+  setMenu: React.Dispatch<React.SetStateAction<boolean>>
 }
-const Navlinks = ({ menu }: NavLinksProps) => {
+const Navlinks = ({ menu,setMenu }: NavLinksProps) => {
   const navLinks: INavLinksDataType[] = [
     {
       slug: "/bengali",
@@ -71,21 +73,24 @@ const Navlinks = ({ menu }: NavLinksProps) => {
       scrapable: true,
     },
   ];
+  const pathname = usePathname()
   const links = navLinks.filter((item) => item.topicId);
   if (menu === true) {
     return (
       <div className="flex flex-col justify-center items-start w-full gap-5">
         <Link
           href="/"
-          className="hover:text-red-700 text-sm text-neutral-700 font-semibold px-3"
+          className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 ${pathname === '/' && "bg-red-700"}`}
+          onClick={() => setMenu(!menu)}
         >
-          হোম
+          মূলপাতা
         </Link>
         {links.map((link) => (
           <Link
             key={link.slug}
             href={`/category/${link.slug}`}
             className="hover:text-red-700 text-sm text-neutral-700 font-semibold px-3"
+            onClick={() => setMenu(!menu)}
           >
             {link.title}
           </Link>
@@ -99,7 +104,7 @@ const Navlinks = ({ menu }: NavLinksProps) => {
         href="/"
         className="hover:text-red-700 text-sm text-neutral-700 font-semibold"
       >
-        হোম
+        মূলপাতা
       </Link>
       {links.map((link) => (
         <Link

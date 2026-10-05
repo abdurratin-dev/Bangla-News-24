@@ -17,7 +17,7 @@ const Marquee = async () => {
         </div>
         <MarqueeText
           className="px-4"
-          duration={15}
+          duration={10}
           direction="right"
         >
           {inprtentHeadlines.map((headline) => (
