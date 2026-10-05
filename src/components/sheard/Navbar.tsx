@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navlinks from "./Navlinks";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import porofileImg from "@/assets/istockphoto-1316947194-612x612.jpg";
 
 const Navbar = () => {
   const date = new Date().toLocaleDateString("bn-BD", {
@@ -67,19 +68,21 @@ const Navbar = () => {
           {/* Auth Links */}
           <div className="md:flex hidden items-center gap-5 justify-end">
             {user ? (
+              <Link href="/profile">
               <div className="flex items-center justify-end gap-3">
                 <div className="flex flex-col items-end">
                   <p className="text-sm font-semibold">{user.name}</p>
                   <p className="text-xs text-neutral-400">{user.email}</p>
                 </div>
                 <Image
-                  src={user?.image}
-                  alt={user.name}
+                  src={user?.image || porofileImg}
+                  alt={user?.name || "User"}
                   width={40}
                   height={40}
                   className="rounded-full"
                 />
               </div>
+              </Link>
             ) : (
               <>
                 <Link
@@ -114,8 +117,8 @@ const Navbar = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Image
-                      src={user?.image}
-                      alt={user.name}
+                      src={user?.image || porofileImg}
+                      alt={user.name || "User"}
                       width={40}
                       height={40}
                       className="rounded-full"

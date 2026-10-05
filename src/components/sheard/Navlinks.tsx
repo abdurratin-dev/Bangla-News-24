@@ -3,6 +3,7 @@ import { INavLinksDataType } from "@/types/type";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
 
+
 interface NavLinksProps {
   menu: boolean;
   setMenu: React.Dispatch<React.SetStateAction<boolean>>
@@ -77,10 +78,10 @@ const Navlinks = ({ menu,setMenu }: NavLinksProps) => {
   const links = navLinks.filter((item) => item.topicId);
   if (menu === true) {
     return (
-      <div className="flex flex-col justify-center items-start w-full gap-5">
+      <div className="flex flex-col justify-center items-start w-full gap-1">
         <Link
           href="/"
-          className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 ${pathname === '/' && "bg-red-700"}`}
+          className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 py-3 w-full ${pathname === '/' && "bg-red-700 text-white rounded-sm hover:text-white hover:bg-red-800"}`}
           onClick={() => setMenu(!menu)}
         >
           মূলপাতা
@@ -89,7 +90,7 @@ const Navlinks = ({ menu,setMenu }: NavLinksProps) => {
           <Link
             key={link.slug}
             href={`/category/${link.slug}`}
-            className="hover:text-red-700 text-sm text-neutral-700 font-semibold px-3"
+            className={`hover:text-red-700 text-sm text-neutral-700 font-semibold px-3 py-3 w-full ${pathname === `/category/${link.slug}` && "bg-red-700 text-white rounded-sm hover:text-white hover:bg-red-800"}`}
             onClick={() => setMenu(!menu)}
           >
             {link.title}
