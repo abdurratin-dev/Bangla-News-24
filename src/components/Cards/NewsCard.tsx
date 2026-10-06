@@ -15,7 +15,7 @@ const NewsCard = ({ news }: NewsCardProps) => {
         <div className="bg-white rounded-lg overflow-hidden border border-neutral-200">
           <Image
             src={news.imageUrl}
-            alt={news.imageAlt}
+            alt={news?.imageAlt}
             width={800}
             height={400}
             className="w-full h-auto"

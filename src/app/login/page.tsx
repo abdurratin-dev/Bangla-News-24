@@ -3,6 +3,7 @@ import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { FaGoogle } from "react-icons/fa";
 
 const LogInPage = () => {
   const router = useRouter();
@@ -48,9 +49,9 @@ const LogInPage = () => {
           </button>
           <button
             onClick={handleGoogleLogin}
-            className="btn bg-red-700 text-white mt-4"
+            className="btn border border-red-700 text-red-700 flex items-center gap-2 mt-4"
           >
-            Log in with google
+            <FaGoogle /> গুগল দিয়ে সাইন ইন করুন
           </button>
         </fieldset>
       </form>

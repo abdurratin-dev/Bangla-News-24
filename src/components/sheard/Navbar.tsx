@@ -68,20 +68,20 @@ const Navbar = () => {
           {/* Auth Links */}
           <div className="md:flex hidden items-center gap-5 justify-end">
             {user ? (
-              <Link href="/profile">
-              <div className="flex items-center justify-end gap-3">
-                <div className="flex flex-col items-end">
-                  <p className="text-sm font-semibold">{user.name}</p>
-                  <p className="text-xs text-neutral-400">{user.email}</p>
+              <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+                <div className="flex items-center justify-end gap-3">
+                  <div className="flex flex-col items-end">
+                    <p className="text-sm font-semibold">{user.name}</p>
+                    <p className="text-xs text-neutral-400">{user.email}</p>
+                  </div>
+                  <Image
+                    src={user?.image || porofileImg}
+                    alt={user?.name || "User"}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                 </div>
-                <Image
-                  src={user?.image || porofileImg}
-                  alt={user?.name || "User"}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-              </div>
               </Link>
             ) : (
               <>
@@ -115,21 +115,28 @@ const Navbar = () => {
             <li className="mt-4 flex flex-col gap-2 border-t border-separator pt-4">
               {user ? (
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src={user?.image || porofileImg}
-                      alt={user.name || "User"}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
+                  <Link href="/profile">
+                    <div className="flex items-center gap-3">
+                      <Image
+                        src={user?.image || porofileImg}
+                        alt={user.name || "User"}
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                      />
 
-                    <div className="flex flex-col items-start">
-                      <p className="text-sm font-semibold">{user.name}</p>
-                      <p className="text-xs text-neutral-400">{user.email}</p>
+                      <div className="flex flex-col items-start">
+                        <p className="text-sm font-semibold">{user.name}</p>
+                        <p className="text-xs text-neutral-400">{user.email}</p>
+                      </div>
                     </div>
-                  </div>
-                  <button className="bg-red-700 hover:bg-red-800 text-white rounded-sm py-1.5 px-3 text-sm font-semibold" onClick={() => authClient.signOut()}>সাইন আউট</button>
+                  </Link>
+                  <button
+                    className="bg-red-700 hover:bg-red-800 text-white rounded-sm py-1.5 px-3 text-sm font-semibold"
+                    onClick={() => authClient.signOut()}
+                  >
+                    সাইন আউট
+                  </button>
                 </div>
               ) : (
                 <>

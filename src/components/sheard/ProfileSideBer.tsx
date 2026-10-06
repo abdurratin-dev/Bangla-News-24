@@ -37,7 +37,7 @@ const ProfileSideBer = () => {
         className="w-full rounded-xl px-3 py-3 font-bold transition text-black/60 hover:bg-black/5 hover:text-black"
         onClick={() => authClient.signOut()}
       >
-        <Link href="/" className="flex items-center gap-2 text-sm">
+        <Link href="/" className="md:flex items-center gap-2 text-sm hidden">
           <LogOut />
           সাইন আউট
         </Link>
